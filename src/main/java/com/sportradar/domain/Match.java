@@ -7,13 +7,13 @@ import java.util.UUID;
 public final class Match {
 
     private final UUID id;
-    private final String homeTeam;
-    private final String awayTeam;
+    private final Team homeTeam;
+    private final Team awayTeam;
     private Score homeScore;
     private Score awayScore;
     private boolean matchFinished;
 
-    public Match(UUID id, String homeTeam, String awayTeam) {
+    public Match(UUID id, Team homeTeam, Team awayTeam) {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -23,8 +23,8 @@ public final class Match {
 
     public MatchDto toDto() {
         return new MatchDto(
-                homeTeam,
-                awayTeam,
+                homeTeam.country(),
+                awayTeam.country(),
                 homeScore.value(),
                 awayScore.value()
         );
@@ -45,11 +45,11 @@ public final class Match {
         this.matchFinished = true;
     }
 
-    public String getHomeTeam() {
+    public Team getHomeTeam() {
         return homeTeam;
     }
 
-    public String getAwayTeam() {
+    public Team getAwayTeam() {
         return awayTeam;
     }
 

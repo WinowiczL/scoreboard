@@ -19,4 +19,15 @@ public class InMemoryMatchRepository implements MatchRepository {
         matches.put(match.getId(), match);
     }
 
+    @Override
+    public boolean isAnyUnfinishedMatch(String homeTeamCountry, String awayTeamCountry) {
+        if (homeTeamCountry == null || homeTeamCountry.isBlank() || awayTeamCountry == null || awayTeamCountry.isBlank()) {
+            throw new IllegalArgumentException("Team and away team cannot be null or blank");
+        }
+        return matches.values().stream()
+                .anyMatch(match -> match.getHomeTeam().country().equals(homeTeamCountry) &&
+                        match.getAwayTeam().country().equals(awayTeamCountry) && !match.isMatchFinished());
+    }
+
+
 }

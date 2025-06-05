@@ -11,8 +11,8 @@ public class ScoreBoardFacade {
 
     private final MatchService matchService;
 
-    public ScoreBoardFacade(MatchRepository matchRepository) {
-        this.matchService = new MatchService(matchRepository);
+    public ScoreBoardFacade(MatchRepository matchRepository, TeamRepository teamRepository) {
+        this.matchService = new MatchService(matchRepository, new TeamService(teamRepository));
     }
 
     public void startMatch(String homeTeamCountry, String awayTeamCountry) {
