@@ -1,6 +1,8 @@
 package main.java.com.sportradar.domain;
 
 import main.java.com.sportradar.domain.dto.MatchDto;
+import main.java.com.sportradar.domain.exceptions.FinishedMatchUpdateException;
+import main.java.com.sportradar.domain.exceptions.ScoreValidationException;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -35,10 +37,10 @@ public final class Match {
 
     public void updateScore(Score homeScore, Score awayScore) {
         if (matchFinished) {
-            throw new IllegalStateException("Cannot update score for a finished match");
+            throw new FinishedMatchUpdateException("Cannot update score for a finished match");
         }
         if (homeScore.value() < 0 || awayScore.value() < 0) {
-            throw new IllegalArgumentException("Scores cannot be negative");
+            throw new ScoreValidationException("Scores cannot be negative");
         }
         this.homeScore = homeScore;
         this.awayScore = awayScore;

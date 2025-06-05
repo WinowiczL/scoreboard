@@ -1,18 +1,20 @@
 package main.java.com.sportradar.domain.command;
 
+import main.java.com.sportradar.domain.exceptions.TeamValidationException;
+
 public record EndMatchCommand(
         String homeTeamCountry,
         String awayTeamCountry) {
 
     public EndMatchCommand {
         if (homeTeamCountry == null || homeTeamCountry.isBlank()) {
-            throw new IllegalArgumentException("Home team country cannot be null or blank");
+            throw new TeamValidationException("Home team country cannot be null or blank");
         }
         if (awayTeamCountry == null || awayTeamCountry.isBlank()) {
-            throw new IllegalArgumentException("Away team country cannot be null or blank");
+            throw new TeamValidationException("Away team country cannot be null or blank");
         }
         if (homeTeamCountry.equalsIgnoreCase(awayTeamCountry)) {
-            throw new IllegalArgumentException("Home and away teams cannot be the same");
+            throw new TeamValidationException("Home and away teams cannot be the same");
         }
     }
 

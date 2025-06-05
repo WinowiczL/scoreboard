@@ -4,6 +4,8 @@ import main.java.com.sportradar.domain.command.EndMatchCommand;
 import main.java.com.sportradar.domain.command.StartMatchCommand;
 import main.java.com.sportradar.domain.command.UpdateMatchScoresCommand;
 import main.java.com.sportradar.domain.dto.MatchDto;
+import main.java.com.sportradar.domain.exceptions.MatchAlreadyExistsException;
+import main.java.com.sportradar.domain.exceptions.MatchNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,7 @@ class MatchService {
     void startMatch(StartMatchCommand startMatchCommand) {
         boolean unfinishedMatch = matchRepository.isAnyUnfinishedMatch(List.of(startMatchCommand.homeTeamCountry(), startMatchCommand.awayTeamCountry()));
         if (unfinishedMatch) {
-            throw new IllegalStateException("There is already an unfinished match between " +
+            throw new MatchAlreadyExistsException("There is already an unfinished match between " +
                     startMatchCommand.homeTeamCountry() + " and " + startMatchCommand.awayTeamCountry());
         }
 
@@ -41,7 +43,7 @@ class MatchService {
             match.finishMatch();
             matchRepository.saveMatch(match);
         }), () -> {
-            throw new IllegalStateException("No unfinished match found between " +
+            throw new MatchNotFoundException("No unfinished match found between " +
                     endMatchCommand.homeTeamCountry() + " and " + endMatchCommand.awayTeamCountry());
         });
     }
@@ -52,7 +54,7 @@ class MatchService {
             match.updateScore(updateMatchScoresCommand.homeTeamScore(), updateMatchScoresCommand.awayTeamScore());
             matchRepository.saveMatch(match);
         }), () -> {
-            throw new IllegalStateException("No unfinished match found between " +
+            throw new MatchNotFoundException("No unfinished match found between " +
                     updateMatchScoresCommand.homeTeamCountry() + " and " + updateMatchScoresCommand.awayTeamCountry());
         });
 

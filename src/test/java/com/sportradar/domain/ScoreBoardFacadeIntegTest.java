@@ -2,6 +2,10 @@ package test.java.com.sportradar.domain;
 
 import main.java.com.sportradar.domain.ScoreBoardFacade;
 import main.java.com.sportradar.domain.dto.MatchDto;
+import main.java.com.sportradar.domain.exceptions.MatchAlreadyExistsException;
+import main.java.com.sportradar.domain.exceptions.MatchNotFoundException;
+import main.java.com.sportradar.domain.exceptions.ScoreValidationException;
+import main.java.com.sportradar.domain.exceptions.TeamValidationException;
 import main.java.com.sportradar.infra.InMemoryMatchRepository;
 import main.java.com.sportradar.infra.InMemoryTeamRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -145,7 +149,7 @@ public class ScoreBoardFacadeIntegTest {
         String team = "Uruguay";
 
         // when & then
-        assertThrows(IllegalArgumentException.class, () -> scoreBoardFacade.startMatch(team, team));
+        assertThrows(TeamValidationException.class, () -> scoreBoardFacade.startMatch(team, team));
     }
 
     @Test
@@ -157,7 +161,7 @@ public class ScoreBoardFacadeIntegTest {
         scoreBoardFacade.startMatch(homeTeam, awayTeam);
 
         // when & then
-        assertThrows(IllegalStateException.class, () -> scoreBoardFacade.startMatch(homeTeam, "Argentina"));
+        assertThrows(MatchAlreadyExistsException.class, () -> scoreBoardFacade.startMatch(homeTeam, "Argentina"));
     }
 
     @Test
@@ -169,13 +173,13 @@ public class ScoreBoardFacadeIntegTest {
         scoreBoardFacade.startMatch(homeTeam, awayTeam);
 
         // when & then
-        assertThrows(IllegalStateException.class, () -> scoreBoardFacade.startMatch(homeTeam, awayTeam));
+        assertThrows(MatchAlreadyExistsException.class, () -> scoreBoardFacade.startMatch(homeTeam, awayTeam));
     }
 
     @Test
     void shouldThrowExceptionWhenUpdatingScoreForNonExistentMatch() {
         // when & then
-        assertThrows(IllegalStateException.class, () -> scoreBoardFacade.updateScore("Mexico", "Canada", 1, 1));
+        assertThrows(MatchNotFoundException.class, () -> scoreBoardFacade.updateScore("Mexico", "Canada", 1, 1));
     }
 
     @ParameterizedTest
@@ -188,7 +192,7 @@ public class ScoreBoardFacadeIntegTest {
         scoreBoardFacade.startMatch(homeTeam, awayTeam);
 
         // when & then
-        assertThrows(IllegalArgumentException.class, () -> scoreBoardFacade.updateScore(homeTeam, awayTeam, homeScore, awayScore));
+        assertThrows(ScoreValidationException.class, () -> scoreBoardFacade.updateScore(homeTeam, awayTeam, homeScore, awayScore));
     }
 
     private static Stream<Arguments> provideInvalidScores() {
@@ -202,7 +206,7 @@ public class ScoreBoardFacadeIntegTest {
     @Test
     void shouldThrowExceptionWhenEndingNonExistentMatch() {
         // when & then
-        assertThrows(IllegalStateException.class, () -> scoreBoardFacade.endMatch("Poland", "Germany"));
+        assertThrows(MatchNotFoundException.class, () -> scoreBoardFacade.endMatch("Poland", "Germany"));
     }
 
     @Test
