@@ -2,6 +2,7 @@ package main.java.com.sportradar.domain;
 
 import main.java.com.sportradar.domain.dto.MatchDto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public final class Match {
@@ -9,6 +10,7 @@ public final class Match {
     private final UUID id;
     private final Team homeTeam;
     private final Team awayTeam;
+    private final LocalDateTime createdAt;
     private Score homeScore;
     private Score awayScore;
     private boolean matchFinished;
@@ -19,6 +21,7 @@ public final class Match {
         this.awayTeam = awayTeam;
         this.homeScore = new Score(0);
         this.awayScore = new Score(0);
+        this.createdAt = LocalDateTime.now();
     }
 
     public MatchDto toDto() {
@@ -65,6 +68,9 @@ public final class Match {
         return awayScore;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     public UUID getId() {
         return id;

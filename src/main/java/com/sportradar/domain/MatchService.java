@@ -6,6 +6,7 @@ import main.java.com.sportradar.domain.command.UpdateMatchScoresCommand;
 import main.java.com.sportradar.domain.dto.MatchDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 class MatchService {
@@ -35,15 +36,33 @@ class MatchService {
     }
 
     void endMatch(EndMatchCommand endMatchCommand) {
-        throw new UnsupportedOperationException("Not implemented yet");
-
+        Optional<Match> notFinishedMatch = matchRepository.getNotFinishedMatch(endMatchCommand.homeTeamCountry(), endMatchCommand.awayTeamCountry());
+        notFinishedMatch.ifPresentOrElse((match -> {
+            match.finishMatch();
+            matchRepository.saveMatch(match);
+        }), () -> {
+            throw new IllegalStateException("No unfinished match found between " +
+                    endMatchCommand.homeTeamCountry() + " and " + endMatchCommand.awayTeamCountry());
+        });
     }
 
     void updateMatchScores(UpdateMatchScoresCommand updateMatchScoresCommand) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        Optional<Match> notFinishedMatch = matchRepository.getNotFinishedMatch(updateMatchScoresCommand.homeTeamCountry(), updateMatchScoresCommand.awayTeamCountry());
+        notFinishedMatch.ifPresentOrElse((match -> {
+            match.updateScore(updateMatchScoresCommand.homeTeamScore(), updateMatchScoresCommand.awayTeamScore());
+            matchRepository.saveMatch(match);
+        }), () -> {
+            throw new IllegalStateException("No unfinished match found between " +
+                    updateMatchScoresCommand.homeTeamCountry() + " and " + updateMatchScoresCommand.awayTeamCountry());
+        });
+
     }
 
     public List<MatchDto> getSummaryOfNotFinishedMatchesByTotalScore() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return matchRepository.getAllNotFinishedMatchesByTotalScore()
+                .stream()
+                .map(Match::toDto)
+                .toList();
+
     }
 }
