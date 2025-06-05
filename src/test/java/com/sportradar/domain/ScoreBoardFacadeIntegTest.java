@@ -17,13 +17,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScoreBoardFacadeIntegTest {
 
-    private static final int INITIAL_SCORE = 0;
-
-    ScoreBoardFacade scoreBoardFacade;
+    private ScoreBoardFacade scoreBoardFacade;
 
     @BeforeEach
     public void setUp() {
@@ -45,8 +45,8 @@ public class ScoreBoardFacadeIntegTest {
         MatchDto match = matches.getFirst();
         assertEquals(homeTeam, match.homeTeamCountry());
         assertEquals(awayTeam, match.awayTeamCountry());
-        assertEquals(INITIAL_SCORE, match.homeScore());
-        assertEquals(INITIAL_SCORE, match.awayScore());
+        assertEquals(0, match.homeScore());
+        assertEquals(0, match.awayScore());
     }
 
     @Test

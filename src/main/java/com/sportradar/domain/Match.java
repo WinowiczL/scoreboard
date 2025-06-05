@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public final class Match {
 
+    private static final int INITIAL_SCORE = 0;
+
     private final UUID id;
     private final Team homeTeam;
     private final Team awayTeam;
@@ -21,8 +23,8 @@ public final class Match {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.homeScore = new Score(0);
-        this.awayScore = new Score(0);
+        this.homeScore = new Score(INITIAL_SCORE);
+        this.awayScore = new Score(INITIAL_SCORE);
         this.createdAt = LocalDateTime.now();
     }
 
