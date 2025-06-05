@@ -15,3 +15,5 @@ Concerns:
 6. It was assumed that a single country can play only one match at a time until it is finished.
 7. It was assumed that any positive score can be set directly instead of incrementing it.
 
+How to use:
+Add the `scoreboard` library to your project dependencies.

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class TeamService {
 
-    TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     public TeamService(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;

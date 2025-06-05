@@ -57,7 +57,6 @@ class MatchService {
             throw new MatchNotFoundException("No unfinished match found between " +
                     updateMatchScoresCommand.homeTeamCountry() + " and " + updateMatchScoresCommand.awayTeamCountry());
         });
-
     }
 
     public List<MatchDto> getSummaryOfNotFinishedMatchesByTotalScore() {
@@ -65,6 +64,6 @@ class MatchService {
                 .stream()
                 .map(Match::toDto)
                 .toList();
-
     }
+
 }
