@@ -2,6 +2,7 @@ package test.java.com.sportradar.domain;
 
 import main.java.com.sportradar.domain.ScoreBoardFacade;
 import main.java.com.sportradar.domain.dto.MatchDto;
+import main.java.com.sportradar.infra.InMemoryMatchRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +22,7 @@ public class ScoreBoardFacadeIntegTest {
 
     @BeforeEach
     public void setUp() {
-        scoreBoardFacade = new ScoreBoardFacade();
+        scoreBoardFacade = new ScoreBoardFacade(new InMemoryMatchRepository());
     }
 
     @Test
