@@ -12,3 +12,6 @@ Concerns:
 3. The results are presented as a sorted list rather than a description in the form of a string, because the exact expectations cannot be inferred from the specification.
 4. Application must be simple, so concurrency issues — such as updating points — were not handled.
 5. For simplicity, a team consists of a `country`, which is a string and does not use ISO locale values.
+6. It was assumed that a single country can play only one match at a time until it is finished.
+7. It was assumed that any positive score can be set directly instead of incrementing it.
+

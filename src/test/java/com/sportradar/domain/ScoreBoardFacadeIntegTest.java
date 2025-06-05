@@ -157,7 +157,7 @@ public class ScoreBoardFacadeIntegTest {
         scoreBoardFacade.startMatch(homeTeam, awayTeam);
 
         // when & then
-        assertThrows(IllegalArgumentException.class, () -> scoreBoardFacade.startMatch(homeTeam, "Argentina"));
+        assertThrows(IllegalStateException.class, () -> scoreBoardFacade.startMatch(homeTeam, "Argentina"));
     }
 
     @Test

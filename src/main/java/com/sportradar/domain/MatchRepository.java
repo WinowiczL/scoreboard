@@ -7,7 +7,7 @@ public interface MatchRepository {
 
     void saveMatch(Match match);
 
-    boolean isAnyUnfinishedMatch(String homeTeamCountry, String awayTeamCountry);
+    boolean isAnyUnfinishedMatch(List<String> teamCountries);
 
     Optional<Match> getNotFinishedMatch(String homeTeamCountry, String awayTeamCountry);
 

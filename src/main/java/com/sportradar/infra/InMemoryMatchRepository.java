@@ -22,13 +22,13 @@ public class InMemoryMatchRepository implements MatchRepository {
     }
 
     @Override
-    public boolean isAnyUnfinishedMatch(String homeTeamCountry, String awayTeamCountry) {
-        if (homeTeamCountry == null || homeTeamCountry.isBlank() || awayTeamCountry == null || awayTeamCountry.isBlank()) {
+    public boolean isAnyUnfinishedMatch(List<String> teamCountries) {
+        if (teamCountries == null || teamCountries.isEmpty()) {
             throw new IllegalArgumentException("Team and away team cannot be null or blank");
         }
         return matches.values().stream()
-                .anyMatch(match -> match.getHomeTeam().country().equals(homeTeamCountry) &&
-                        match.getAwayTeam().country().equals(awayTeamCountry) && !match.isMatchFinished());
+                .anyMatch(match -> (teamCountries.contains(match.getHomeTeam().country()) ||
+                        teamCountries.contains(match.getAwayTeam().country())) && !match.isMatchFinished());
     }
 
     @Override

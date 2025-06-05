@@ -20,7 +20,7 @@ class MatchService {
     }
 
     void startMatch(StartMatchCommand startMatchCommand) {
-        boolean unfinishedMatch = matchRepository.isAnyUnfinishedMatch(startMatchCommand.homeTeamCountry(), startMatchCommand.awayTeamCountry());
+        boolean unfinishedMatch = matchRepository.isAnyUnfinishedMatch(List.of(startMatchCommand.homeTeamCountry(), startMatchCommand.awayTeamCountry()));
         if (unfinishedMatch) {
             throw new IllegalStateException("There is already an unfinished match between " +
                     startMatchCommand.homeTeamCountry() + " and " + startMatchCommand.awayTeamCountry());
